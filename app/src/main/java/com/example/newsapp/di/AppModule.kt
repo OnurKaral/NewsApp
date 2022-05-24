@@ -1,6 +1,5 @@
 package com.example.newsapp.di
 
-import com.example.newsapp.model.News
 import com.example.newsapp.network.NewsApi
 import com.example.newsapp.repository.NewsRepository
 import com.example.newsapp.utils.Constants
