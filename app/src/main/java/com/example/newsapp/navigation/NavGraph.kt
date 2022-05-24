@@ -14,8 +14,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import androidx.navigation.NavType
@@ -36,28 +34,21 @@ fun SetupNavGraph(){
         arguments = listOf(
             navArgument("url"){
                 type = NavType.StringType
-            }
-        )
-        ) {
+            })) {
             Log.d("test",it.arguments.toString())
             DetailScreen("a101"+ it.arguments.toString(), navController)
         }
     }
-
-
-
 }
 
 
 @Composable
 fun DetailScreen(url: String,navController: NavController){
 
-
-    var urlnew = url.substringAfterLast("}, url=").replace("}]","")
+    val urlnew = url.substringAfterLast("}, url=").replace("}]","")
     Scaffold(topBar = {
         SmallTopAppBar(title = { Text(text = "Details") },
             modifier = Modifier.background(MaterialTheme.colorScheme.onPrimary),
-
             navigationIcon = {
                 IconButton(onClick = {
                     navController.navigate(Screens.Home.route){
@@ -76,7 +67,6 @@ fun DetailScreen(url: String,navController: NavController){
                 .fillMaxWidth()
         ) {
 
-
             Column {
                 AndroidView(
                     factory = {
@@ -92,12 +82,8 @@ fun DetailScreen(url: String,navController: NavController){
                         }
                     }, update = {
                         it.loadUrl(urlnew)
-                    }
-                )
-
+                    })
             }
-
         }
     }
-
 }

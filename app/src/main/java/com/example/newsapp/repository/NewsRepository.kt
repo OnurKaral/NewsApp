@@ -18,7 +18,6 @@ class NewsRepository @Inject  constructor(
             dataOrException.data = api.getNews("tr","4635ce667e294e1fabdc1dabd4b7f9af").articles
            if (dataOrException.data.toString().isNotEmpty()) dataOrException.isLoading = false
 
-
         }catch (exception: Exception){
             dataOrException.exception = exception
         }

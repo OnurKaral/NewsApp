@@ -23,6 +23,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun Reports(viewModel: HomeScreenViewModel, navController: NavController){
     val news = viewModel.data.value
@@ -32,34 +33,23 @@ fun Reports(viewModel: HomeScreenViewModel, navController: NavController){
             items(it){
                 NewsCard(article = it, onClick = {
                     val encodedUrl = URLEncoder.encode(it.url, StandardCharsets.UTF_8.toString())
-
                     navController.navigate(route = "detail_screen/$encodedUrl")
                 })
             }
-
         }
     }
-
-
 }
 
 @ExperimentalCoroutinesApi
 @Composable
 fun NewsCard(
     article: Article,
-    onClick: (Article) -> Unit,
-){
+    onClick: (Article) -> Unit){
     Card(
-        shape = MaterialTheme.shapes.small,
-        modifier = Modifier
-            .padding(
+        shape = MaterialTheme.shapes.small, modifier = Modifier.padding(
                 bottom = 6.dp,
-                top = 6.dp,
-            )
-            .fillMaxWidth()
-            .clickable { onClick(article) },
-        elevation = 8.dp,
-    ) {
+                top = 6.dp).fillMaxWidth().clickable { onClick(article) },
+                elevation = 8.dp) {
 
         Column() {
             article.urlToImage?.let { url ->
@@ -74,39 +64,24 @@ fun NewsCard(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(5.dp)
-                ){
+                        .padding(5.dp)){
                     Text(
                         text = title,
-                        modifier = Modifier
-                            .fillMaxWidth(0.85f)
-                            .wrapContentWidth(Alignment.Start)
-                        , fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold
-
-                    )
-
+                        modifier = Modifier.fillMaxWidth(0.85f).wrapContentWidth(Alignment.Start),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold)
                 }
             }
             article.description?.let { description ->
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(5.dp)
-                ){
+                    modifier = Modifier.fillMaxWidth().padding(5.dp)){
                     Text(
                         text = description,
-                        modifier = Modifier
-                            .fillMaxWidth(0.85f)
-                            .wrapContentWidth(Alignment.Start)
-                        ,
-                        fontSize = 14.sp , fontWeight = FontWeight.Light,
-
-                        )
-
+                        modifier = Modifier.fillMaxWidth(0.85f).wrapContentWidth(Alignment.Start),
+                        fontSize = 14.sp , fontWeight = FontWeight.Light)
                 }
             }
         }
-        }
     }
+}
 

@@ -14,7 +14,6 @@ import com.example.newsapp.components.Reports
 
 @Composable
 fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel(), navController: NavController){
-   // val navController = rememberNavController()
     Scaffold(topBar = {
         SmallTopAppBar(title = { Text(text = "News List") },
             modifier = Modifier.background(MaterialTheme.colorScheme.onPrimary))
