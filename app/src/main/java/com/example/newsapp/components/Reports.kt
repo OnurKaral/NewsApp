@@ -23,6 +23,9 @@ import com.example.newsapp.model.Article
 import com.example.newsapp.navigation.Screens
 import com.example.newsapp.screens.HomeScreen.HomeScreenViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
+
 @Composable
 fun Reports(viewModel: HomeScreenViewModel, navController: NavController){
     val news = viewModel.data.value
@@ -30,7 +33,11 @@ fun Reports(viewModel: HomeScreenViewModel, navController: NavController){
     news.data?.let {
         LazyColumn(){
             items(it){
-                NewsCard(article = it, onClick = {})
+                NewsCard(article = it, onClick = {
+                    val encodedUrl = URLEncoder.encode(it.url, StandardCharsets.UTF_8.toString())
+
+                    navController.navigate(route = "detail_screen/$encodedUrl")
+                })
             }
 
         }
@@ -43,7 +50,7 @@ fun Reports(viewModel: HomeScreenViewModel, navController: NavController){
 @Composable
 fun NewsCard(
     article: Article,
-    onClick: () -> Unit,
+    onClick: (Article) -> Unit,
 ){
     Card(
         shape = MaterialTheme.shapes.small,
@@ -53,7 +60,7 @@ fun NewsCard(
                 top = 6.dp,
             )
             .fillMaxWidth()
-            .clickable(onClick = onClick),
+            .clickable { onClick(article) },
         elevation = 8.dp,
     ) {
 
