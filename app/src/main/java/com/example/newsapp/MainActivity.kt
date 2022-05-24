@@ -27,7 +27,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.newsapp.components.NewsCard
 import com.example.newsapp.navigation.SetupNavGraph
 import com.example.newsapp.screens.HomeScreen.HomeScreenViewModel
-import com.example.newsapp.screens.HomeScreen.NewsHomePage
 import com.example.newsapp.ui.theme.NewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,13 +36,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NewsAppTheme {
-              val  navController = rememberNavController()
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    SetupNavGraph(navController =navController )
+                    SetupNavGraph()
 
 
                 }
