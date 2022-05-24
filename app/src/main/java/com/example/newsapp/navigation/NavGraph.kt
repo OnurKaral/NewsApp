@@ -8,12 +8,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
@@ -39,7 +40,7 @@ fun SetupNavGraph(){
         )
         ) {
             Log.d("test",it.arguments.toString())
-            DetailScreen(it.arguments.toString(), navController)
+            DetailScreen("a101"+ it.arguments.toString(), navController)
         }
     }
 
@@ -50,17 +51,29 @@ fun SetupNavGraph(){
 
 @Composable
 fun DetailScreen(url: String,navController: NavController){
-    val decodeURL = "https://google.com/"
 
 
+    var urlnew = url.substringAfterLast("}, url=").replace("}]","")
     Scaffold(topBar = {
-        SmallTopAppBar(title = { Text(text = "News List") },
-            modifier = Modifier.background(MaterialTheme.colorScheme.onPrimary))
+        SmallTopAppBar(title = { Text(text = "Details") },
+            modifier = Modifier.background(MaterialTheme.colorScheme.onPrimary),
+
+            navigationIcon = {
+                IconButton(onClick = {
+                    navController.navigate(Screens.Home.route){
+                        popUpTo(Screens.Home.route){
+                            inclusive= true
+                        }
+                    }
+                }) {
+                    Icon(Icons.Filled.ArrowBack, "")
+                } },)
     }) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
 
 
@@ -78,25 +91,12 @@ fun DetailScreen(url: String,navController: NavController){
                             }
                         }
                     }, update = {
-                        it.loadUrl(url)
+                        it.loadUrl(urlnew)
                     }
                 )
+
             }
-            
-            Button(onClick = {
-                navController.navigate(Screens.Home.route){
-                    popUpTo(Screens.Home.route){
-                        inclusive= true
-                    }
-                }
-            }, modifier = Modifier
-                .padding(10.dp)
-                .width(30.dp)
-                .height(20.dp)
-                
-            ) {
-                Text(text = "test")
-            }
+
         }
     }
 
